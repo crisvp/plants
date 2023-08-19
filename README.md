@@ -4,6 +4,27 @@
 
 A guide on how to care for the plants in my house; this is for personal use, but feel free to copy, extend, or submit PRs.
 
+## Plants
+
+- [African Mask](./pages/AfricanMask)
+- [Aloe Vera](./pages/AloeVera)
+- [Arrowhead Vine](./pages/ArrowheadVine)
+- [ChineseMoneyPlant](./pages/ChineseMoneyPlant)
+- [Christmas Cactus](./pages/ChristmasCactus)
+- [Depressed Clearweed](./pages/DepressedClearweed)
+- [Fiddle Leaf Fig](./pages/FiddleLeafFig)
+- [Norfolk Island Pine](./pages/NorfolkIslandPine)
+- [Orchid](./pages/Orchid)
+- [Parlor Palm](./pages/ParlorPalm)
+- [PeaceLily](./pages/PeaceLily)
+- [Pinstriped Houseplant](./pages/PinstripedHouseplant)
+- [Snake Plant](./pages/SnakePlant)
+- [Spider Plant](./pages/SpiderPlant)
+- [String of Hearts](./pages/StringOfHearts)
+- [String of Pearls](./pages/StringOfPearls)
+- [Wandering Dude](./pages/WanderingDude)
+- [Weeping Fig](./pages/WeepingFig)
+
 ## Development
 
 This guide was painstakingly researched and typeset by providing ChatGPT with the following instruction, and then listing off a bunch of plants:
