@@ -1,0 +1,12 @@
+node_modules/**/*
+.git/**/*
+vendor/**/*
+chrome-profile*/**/*
+dist/**/*
+pnpm-lock.yaml
+**/build/**/*
+doc/coverage
+.buildkite/**
+*.timestamp*
+playwright-report
+test-results
