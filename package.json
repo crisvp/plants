@@ -1,31 +1,66 @@
 {
   "name": "plant-care",
+  "description": "Information on how not to kill plants, maybe.",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "lint": "eslint . && vue-tsc && prettier --check .",
+    "lint:fix": "eslint --fix . && prettier -w .",
+    "test": "pnpm lint",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "eslint-plugin-vue": "^9.17.0",
-    "vite-plugin-md": "^0.21.5",
-    "vue": "^3.3.4"
+    "dev": "vite",
+    "preview": "vite preview",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@heroicons/vue": "^2.0.18",
     "@tailwindcss/typography": "^0.5.9",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/eslint-config-typescript": "^11.0.3",
     "autoprefixer": "^10.4.15",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "husky": "^8.0.3",
     "postcss": "^8.4.28",
     "postcss-import": "^15.1.0",
     "postcss-nesting": "^12.0.1",
+    "prettier": "^3.0.2",
     "tailwindcss": "^3.3.3",
     "tailwindcss-animate": "^1.0.6",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
+    "vite-plugin-md": "^0.21.5",
+    "vue": "^3.3.4",
     "vue-router": "^4.2.4",
     "vue-tsc": "^1.8.5"
+  },
+  "prettier": {
+    "semi": true,
+    "proseWrap": "always",
+    "overrides": [
+      {
+        "files": [
+          "*.md"
+        ],
+        "options": {
+          "printWidth": 150,
+          "proseWrap": "never"
+        }
+      },
+      {
+        "files": [
+          "*.code-workspace"
+        ],
+        "options": {
+          "parser": "json",
+          "tabWidth": 2,
+          "useTabs": false
+        }
+      }
+    ]
   }
 }

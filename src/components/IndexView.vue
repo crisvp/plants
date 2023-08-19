@@ -9,8 +9,10 @@
       <h1>Home</h1>
       <h2>Plant Index</h2>
       <ul>
-        <li v-for="[plant, path] in plants">
-          <router-link :to="path">{{ plant }}</router-link>
+        <li v-for="[plant, path] in plants" :key="path">
+          <router-link :to="path">
+            {{ plant }}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -18,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import { HomeIcon } from "@heroicons/vue/24/solid";
-import { computed } from "vue";
+import { HomeIcon } from '@heroicons/vue/24/solid';
+import { computed } from 'vue';
 
 const props = defineProps<{ paths: string[] }>();
 
@@ -28,7 +30,7 @@ const plants = computed((): [string, string][] => {
     const p = path.match(/\/plant\/(.*)$/);
     if (!p) return [null, null];
 
-    const name = p[1].split(/(?=[A-Z])/)?.join(" ");
+    const name = p[1].split(/(?=[A-Z])/)?.join(' ');
 
     return [name, path];
   });
@@ -38,7 +40,7 @@ const plants = computed((): [string, string][] => {
 </script>
 
 <style scoped>
-@import "../style.pcss";
+@import '../style.pcss';
 
 @layer components {
   .content {
