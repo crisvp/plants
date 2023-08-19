@@ -6,10 +6,10 @@ A guide on how to care for the plants in my house; this is for personal use, but
 
 ## Development
 
-This guide was painstakingly typeset by providing ChatGPT with the following instruction, and then listing off a bunch of plants:
+This guide was painstakingly researched and typeset by providing ChatGPT with the following instruction, and then listing off a bunch of plants:
 
 ```text
-when asked about how to care for a specific plant, use the following format to create a markdown document with your response.
+When asked about how to care for a specific plant, use the following format to create a markdown document with your response.
 
 Use the following layout, replacing the text in square brackets with your answers, with the common name in bold, and the latin name in italics:
 
