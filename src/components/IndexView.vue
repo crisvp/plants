@@ -16,6 +16,7 @@
         </li>
       </ul>
     </div>
+    <UnsplashAttribution :image="defaultBackground" />
   </div>
 </template>
 
@@ -23,7 +24,11 @@
 import { HomeIcon } from '@heroicons/vue/24/solid';
 import { computed } from 'vue';
 
+import { defaultBackground } from '../lib/unsplash';
+import UnsplashAttribution from './UnsplashAttribution.vue';
+
 const props = defineProps<{ paths: string[] }>();
+console.log(import.meta.env.VITE_UNSPLASH_DEFAULT_URL);
 
 const plants = computed((): [string, string][] => {
   const result = props.paths.map((path) => {
@@ -61,3 +66,4 @@ const plants = computed((): [string, string][] => {
   }
 }
 </style>
+../unsplashj ../unsplash ../lib/unsplash

@@ -9,39 +9,35 @@
       <component :is="plantComponent" ref="markdown" class="markdown" @click="handleClick"></component>
     </Suspense>
   </div>
-  <div class="bg-slate-500 opacity-70 fixed bottom-0 right-0 text-sm">
-    Background image by <a :href="unsplash.portfolio">{{ unsplash.name }}</a> on
-    <a href="https://unsplash.com/?utm_source=plant-care-guide&utm_medium=referral">Unsplash</a>
-  </div>
+  <UnsplashAttribution :image="unsplash" />
 </template>
 
 <script setup lang="ts">
 import { HomeIcon } from '@heroicons/vue/24/solid';
-import { onMounted, reactive } from 'vue';
+import { onMounted, onUnmounted, reactive } from 'vue';
+
+import { defaultBackground, getUnsplash, UnsplashImage } from '../lib/unsplash';
+import UnsplashAttribution from './UnsplashAttribution.vue';
 
 const props = defineProps<{ name: string }>();
 const plantComponent = (await import(`../../pages/${props.name}.md`)).default;
-const unsplash = reactive({ url: '', portfolio: '', name: '' });
-
-interface UnsplashImage {
-  url: string;
-  portfolio: string;
-  name: string;
-}
+const unsplash = reactive<UnsplashImage>({ url: '', name: '', profile: '' });
 
 onMounted(async () => {
   try {
-    Object.assign(unsplash, await getUnsplash());
+    const query = props.name.split(/(?=[A-Z])/).join(' ') + ' plant';
+    Object.assign(unsplash, await getUnsplash(query));
   } catch (e) {
-    console.error(e);
-    unsplash.url =
-      'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=627&q=80';
-    unsplash.name = 'Nahil Naseer';
-    unsplash.portfolio = 'https://unsplash.com/@nahilnaseer?utm_source=plant-care-guide&utm_medium=referral';
+    Object.assign(unsplash, defaultBackground);
   }
 
   document.body.style.backgroundImage = `url(${unsplash.url})`;
   document.body.style.backgroundSize = 'cover';
+});
+
+onUnmounted(() => {
+  document.body.style.backgroundImage = '';
+  document.body.style.backgroundSize = '';
 });
 
 function handleClick(e: MouseEvent) {
@@ -61,38 +57,6 @@ function toggleElement(node: HTMLElement) {
   node.classList.remove(hidden ? 'animate-slide-head-out' : 'animate-slide-head-in');
   console.log('hidden', hidden);
   node.dataset.hidden = hidden ? 'false' : 'true';
-}
-
-async function getUnsplash(): Promise<UnsplashImage> {
-  const query = props.name.split(/(?=[A-Z])/).join(' ') + ' plant';
-
-  const result = await fetch(
-    'https://api.unsplash.com/search/photos?' +
-      new URLSearchParams({
-        client_id: 'ns0oUaKF70K5B3hqSsiNzh24dAD533d67lJ3klN_KQ0',
-        query,
-      }),
-    {
-      method: 'GET',
-      mode: 'cors',
-    },
-  );
-  if (!result.ok) throw new Error('Failed to fetch image');
-  if (!result.body) throw new Error('No response body');
-
-  const reader = result.body.getReader();
-  const decoder = new TextDecoder('utf-8');
-  const { value: chunk, done } = await reader.read();
-  if (done) throw new Error('No response body');
-
-  const data = JSON.parse(decoder.decode(chunk));
-  const idx = Math.floor(Math.random() * data.results.length);
-
-  return {
-    url: data.results[idx].urls.regular,
-    name: `${data.results[idx].user.name}`,
-    portfolio: data.results[idx].user.portfolio_url ?? data.results[idx].user.links.html,
-  };
 }
 </script>
 
@@ -117,3 +81,4 @@ async function getUnsplash(): Promise<UnsplashImage> {
   }
 }
 </style>
+../unsplashj ../unsplash ../lib/unsplash
