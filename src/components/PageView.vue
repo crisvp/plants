@@ -9,27 +9,38 @@
       <component :is="plantComponent" ref="markdown" class="markdown" @click="handleClick"></component>
     </Suspense>
   </div>
+  <div class="bg-slate-500 opacity-70 fixed bottom-0 right-0 text-sm">
+    Background image by <a :href="unsplash.portfolio">{{ unsplash.name }}</a> on
+    <a href="https://unsplash.com/?utm_source=plant-care-guide&utm_medium=referral">Unsplash</a>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { HomeIcon } from '@heroicons/vue/24/solid';
-import { onMounted } from 'vue';
+import { onMounted, reactive } from 'vue';
 
 const props = defineProps<{ name: string }>();
 const plantComponent = (await import(`../../pages/${props.name}.md`)).default;
+const unsplash = reactive({ url: '', portfolio: '', name: '' });
+
+interface UnsplashImage {
+  url: string;
+  portfolio: string;
+  name: string;
+}
 
 onMounted(async () => {
-  let bgUrl: string | undefined;
   try {
-    bgUrl = await getUnsplash();
+    Object.assign(unsplash, await getUnsplash());
   } catch (e) {
     console.error(e);
-    bgUrl =
+    unsplash.url =
       'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=627&q=80';
+    unsplash.name = 'Nahil Naseer';
+    unsplash.portfolio = 'https://unsplash.com/@nahilnaseer?utm_source=plant-care-guide&utm_medium=referral';
   }
-  if (!bgUrl) return;
 
-  document.body.style.backgroundImage = `url(${bgUrl})`;
+  document.body.style.backgroundImage = `url(${unsplash.url})`;
   document.body.style.backgroundSize = 'cover';
 });
 
@@ -52,7 +63,7 @@ function toggleElement(node: HTMLElement) {
   node.dataset.hidden = hidden ? 'false' : 'true';
 }
 
-async function getUnsplash() {
+async function getUnsplash(): Promise<UnsplashImage> {
   const query = props.name.split(/(?=[A-Z])/).join(' ') + ' plant';
 
   const result = await fetch(
@@ -75,7 +86,13 @@ async function getUnsplash() {
   if (done) throw new Error('No response body');
 
   const data = JSON.parse(decoder.decode(chunk));
-  return data.results[Math.floor(Math.random() * data.results.length)].urls.regular;
+  const idx = Math.floor(Math.random() * data.results.length);
+
+  return {
+    url: data.results[idx].urls.regular,
+    name: `${data.results[idx].user.name}`,
+    portfolio: data.results[idx].user.portfolio_url ?? data.results[idx].user.links.html,
+  };
 }
 </script>
 
